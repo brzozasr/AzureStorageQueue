@@ -8,14 +8,9 @@ using System.Threading.Tasks;
 namespace RandomUserSender.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         private readonly ILogger<UserController> _logger;
 
         public UserController(ILogger<UserController> logger)
@@ -23,9 +18,13 @@ namespace RandomUserSender.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        [HttpGet("Send/To/Cloude/Queue")]
+        public async Task<IActionResult> SendUser()
         {
-            
+            _logger.LogInformation("User was sent to the Azure Queue");
+            return Ok(new {Test = "test"});
+        }
+        
+        
     }
 }
