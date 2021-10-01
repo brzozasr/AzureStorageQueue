@@ -1,9 +1,9 @@
 ﻿using System.IO;
 using Microsoft.Extensions.Configuration;
 
-namespace RandomUserSender.Extensions
+namespace RandomUserSender.Utilities
 {
-    public class AppSettingsExtension
+    public class AppSettings
     {
         public static string GetAppSettings(string appSettingsJsonValue)
         {

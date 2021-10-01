@@ -5,12 +5,12 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
-using RandomUserSender.Extensions;
+using Newtonsoft.Json;
 using SharedModels;
 
 namespace RandomUserSender.Services
 {
-    public class UserService
+    public class UserService : IUserService
     {
         private readonly HttpClient _httpClient;
 
@@ -25,14 +25,15 @@ namespace RandomUserSender.Services
             _httpClient.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
-            using (var response = await _httpClient.GetAsync(
-                AppSettingsExtension.GetAppSettings("RandomUserMe:BaseApiUrl")))
+            using (var response = await _httpClient.GetAsync(_httpClient.BaseAddress))
             {
-                var content = await response.Content.ReadAsStreamAsync();
+                //var content = await response.Content.ReadAsStreamAsync();
+                var content = await response.Content.ReadAsStringAsync();
 
-                if (content.Length > 0)
+                if (!string.IsNullOrEmpty(content) && content.Contains("results") && content.Contains("gender"))
                 {
-                    var user = await JsonSerializer.DeserializeAsync<User>(content);
+                    //var user = await JsonSerializer.DeserializeAsync<User>(content);
+                    var user = JsonConvert.DeserializeObject<User>(content);
                     return user;
                 }
             }
