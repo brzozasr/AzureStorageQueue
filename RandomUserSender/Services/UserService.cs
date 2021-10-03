@@ -1,44 +1,52 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text.Json;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using SharedModels;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace RandomUserSender.Services
 {
     public class UserService : IUserService
     {
         private readonly HttpClient _httpClient;
+        private readonly ILogger<IUserService> _logger;
 
-        public UserService(HttpClient httpClient)
+        public UserService(HttpClient httpClient, ILogger<IUserService> logger)
         {
             _httpClient = httpClient;
+            _logger = logger;
         }
 
         public async Task<User> GetUserServiceAsync()
         {
-            _httpClient.DefaultRequestHeaders.Accept.Clear();
-            _httpClient.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
-
-            using (var response = await _httpClient.GetAsync(_httpClient.BaseAddress))
+            try
             {
-                //var content = await response.Content.ReadAsStreamAsync();
-                var content = await response.Content.ReadAsStringAsync();
+                _httpClient.DefaultRequestHeaders.Accept.Clear();
+                _httpClient.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json"));
 
-                if (!string.IsNullOrEmpty(content) && content.Contains("results") && content.Contains("gender"))
+                using (var response = await _httpClient.GetAsync(_httpClient.BaseAddress))
                 {
-                    //var user = await JsonSerializer.DeserializeAsync<User>(content);
-                    var user = JsonConvert.DeserializeObject<User>(content);
-                    return user;
-                }
-            }
+                    var content = await response.Content.ReadAsStreamAsync();
 
-            return null;
+                    if (content.Length > 0)
+                    {
+                        var user = await JsonSerializer.DeserializeAsync<User>(content);
+                        _logger.LogInformation("Deserialization of the user successful");
+                        return user;
+                    }
+                }
+               
+                return null;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }

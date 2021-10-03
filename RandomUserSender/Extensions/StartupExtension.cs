@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 using RandomUserSender.Services;
 
 namespace RandomUserSender.Extensions
@@ -16,7 +18,7 @@ namespace RandomUserSender.Extensions
                 new UserService(new HttpClient
                 {
                     BaseAddress = uri
-                }));
+                }, serviceProvide.GetRequiredService<ILogger<IUserService>>()));
         }
     }
 }
