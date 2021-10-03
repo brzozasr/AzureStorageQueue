@@ -18,7 +18,8 @@ namespace RandomUserSender.Extensions
                 new UserService(new HttpClient
                 {
                     BaseAddress = uri
-                }, serviceProvide.GetRequiredService<ILogger<IUserService>>()));
+                }, 
+                serviceProvide.GetRequiredService<ILogger<IUserService>>()));
         }
     }
 }

@@ -44,8 +44,8 @@ namespace RandomUserSender.Services
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                _logger.LogError(e.Message);
+                return null;
             }
         }
     }
