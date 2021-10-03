@@ -3,29 +3,55 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.Storage.Queues;
+using RandomUserSender.Services;
+using RandomUserSender.Utilities;
+using SharedModels;
 
 namespace RandomUserSender.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         private readonly ILogger<UserController> _logger;
+        private readonly IUsersQueue _usersQueue;
+        private readonly IQueueClientService _queueClientService;
 
-        public UserController(ILogger<UserController> logger)
+        public UserController(ILogger<UserController> logger, IUsersQueue usersQueue, IQueueClientService queueClientService)
         {
             _logger = logger;
+            _usersQueue = usersQueue;
+            _queueClientService = queueClientService;
         }
 
-        [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        [HttpGet("Send/To/Cloude/Queue")]
+        public async Task<IActionResult> SendUser()
         {
-            
+            try
+            {
+                if (_usersQueue.QueueWithUsers.Count > 0)
+                {
+                    var user = _usersQueue.QueueWithUsers.Dequeue();
+                    var message = JsonSerializer.Serialize(user);
+                    await _queueClientService.SendMessageAsync(message);
+                    _logger.LogInformation("User was sent to the Azure Queue");
+
+                    return Ok(user);
+                }
+
+                _logger.LogWarning("The queue is empty");
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return BadRequest($"{e.Message}");
+            }
+        }
+        
+        
     }
 }

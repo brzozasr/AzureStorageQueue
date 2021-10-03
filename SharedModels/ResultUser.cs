@@ -31,7 +31,7 @@ namespace SharedModels
         [JsonPropertyName("cell")] 
         public string Cell { get; set; }
 
-        [JsonPropertyName("")] 
+        [JsonPropertyName("id")] 
         public Id Id { get; set; }
 
         [JsonPropertyName("picture")] 

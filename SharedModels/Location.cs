@@ -17,7 +17,7 @@ namespace SharedModels
         public string Country { get; set; }
 
         [JsonPropertyName("postcode")] 
-        public string Postcode { get; set; }
+        public object Postcode { get; set; }
 
         [JsonPropertyName("coordinates")] 
         public Coordinates Coordinates { get; set; }
