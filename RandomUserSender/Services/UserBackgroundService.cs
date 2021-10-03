@@ -31,15 +31,26 @@ namespace RandomUserSender.Services
             {
                 using (var scope = _serviceProvider.CreateScope())
                 {
-                    var userService = scope.ServiceProvider.GetRequiredService<IUserService>();
-                    var user = await userService.GetUserServiceAsync();
+                    var queueCount = 100;
+                    User user = null;
 
-                    if (user is not null)
+                    if (_usersQueue.QueueWithUsers.Count < queueCount)
+                    {
+                        var userService = scope.ServiceProvider.GetRequiredService<IUserService>();
+                        user = await userService.GetUserServiceAsync();
+                    }
+                    
+
+                    if (user is not null && _usersQueue.QueueWithUsers.Count < queueCount)
                     {
                         _usersQueue.QueueWithUsers.Enqueue(user);
                         _logger.LogInformation($"Number of users in the queue is {_usersQueue.QueueWithUsers.Count}");
                     }
-                    else
+                    else if (_usersQueue.QueueWithUsers.Count >= queueCount)
+                    {
+                        _logger.LogInformation($"The queue is full, the max size of the queue is established to {queueCount}");
+                    }
+                    else if (user is null)
                     {
                         _logger.LogInformation("The user object is null");
                     }
