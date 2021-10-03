@@ -1,14 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.Storage.Queues;
 using RandomUserSender.Services;
-using RandomUserSender.Utilities;
-using SharedModels;
 
 namespace RandomUserSender.Controllers
 {
@@ -27,7 +22,7 @@ namespace RandomUserSender.Controllers
             _queueClientService = queueClientService;
         }
 
-        [HttpGet("Send/To/Cloude/Queue")]
+        [HttpGet("Send/To/Cloud/Queue")]
         public async Task<IActionResult> SendUser()
         {
             try
