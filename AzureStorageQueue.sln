@@ -3,12 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31613.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomUserSender", "RandomUserSender\RandomUserSender.csproj", "{49E59738-9A9C-44FC-B762-E7D01073E302}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomUserSender", "RandomUserSender\RandomUserSender.csproj", "{49E59738-9A9C-44FC-B762-E7D01073E302}"
 	ProjectSection(ProjectDependencies) = postProject
 		{35A09485-C9EB-430A-9C72-1F936D5310D5} = {35A09485-C9EB-430A-9C72-1F936D5310D5}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedModels", "SharedModels\SharedModels.csproj", "{35A09485-C9EB-430A-9C72-1F936D5310D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedModels", "SharedModels\SharedModels.csproj", "{35A09485-C9EB-430A-9C72-1F936D5310D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserSenderToStorageQueue", "UserSenderToStorageQueue\UserSenderToStorageQueue.csproj", "{5E864585-A36D-4CB3-A22D-3050A9770521}"
+	ProjectSection(ProjectDependencies) = postProject
+		{35A09485-C9EB-430A-9C72-1F936D5310D5} = {35A09485-C9EB-430A-9C72-1F936D5310D5}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserReceiverFromStorageQueue", "UserReceiverFromStorageQueue\UserReceiverFromStorageQueue.csproj", "{BF9D759E-F19D-4BCA-9EA1-07270209BD44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +31,14 @@ Global
 		{35A09485-C9EB-430A-9C72-1F936D5310D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35A09485-C9EB-430A-9C72-1F936D5310D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35A09485-C9EB-430A-9C72-1F936D5310D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E864585-A36D-4CB3-A22D-3050A9770521}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E864585-A36D-4CB3-A22D-3050A9770521}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E864585-A36D-4CB3-A22D-3050A9770521}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E864585-A36D-4CB3-A22D-3050A9770521}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF9D759E-F19D-4BCA-9EA1-07270209BD44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF9D759E-F19D-4BCA-9EA1-07270209BD44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF9D759E-F19D-4BCA-9EA1-07270209BD44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF9D759E-F19D-4BCA-9EA1-07270209BD44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
