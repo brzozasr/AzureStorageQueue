@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
 using Azure.Storage.Queues;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
 using RandomUserSender.Services;
 
 namespace RandomUserSender.Extensions
@@ -27,7 +23,7 @@ namespace RandomUserSender.Extensions
             string connectionString,
             string queueName)
         {
-            return services.AddSingleton<IQueueClientService, QueueClientService>(x =>
+            return services.AddSingleton<IQueueClientService, QueueClientService>(serviceProvide =>
                 new QueueClientService(new QueueClient(connectionString, queueName)));
         }
     }
