@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Storage.Queues;
 using RandomUserSender.Services;
+using RandomUserSender.Utilities;
 using SharedModels;
 
 namespace RandomUserSender.Controllers
@@ -17,31 +18,38 @@ namespace RandomUserSender.Controllers
     {
         private readonly ILogger<UserController> _logger;
         private readonly IUsersQueue _usersQueue;
+        private readonly IQueueClientService _queueClientService;
 
-        public UserController(ILogger<UserController> logger, IUsersQueue usersQueue)
+        public UserController(ILogger<UserController> logger, IUsersQueue usersQueue, IQueueClientService queueClientService)
         {
             _logger = logger;
             _usersQueue = usersQueue;
+            _queueClientService = queueClientService;
         }
 
         [HttpGet("Send/To/Cloude/Queue")]
         public async Task<IActionResult> SendUser()
         {
-            var connectionString = "";
-            var queueName = "";
-            var queueClient = new QueueClient(connectionString, queueName);
-
-            User user = null;
-
-            if (_usersQueue.QueueWithUsers.Count > 0)
+            try
             {
-                user = _usersQueue.QueueWithUsers.Dequeue();
-                var message = JsonSerializer.Serialize(user);
-                await queueClient.SendMessageAsync(message);
-                _logger.LogInformation("User was sent to the Azure Queue");
+                if (_usersQueue.QueueWithUsers.Count > 0)
+                {
+                    var user = _usersQueue.QueueWithUsers.Dequeue();
+                    var message = JsonSerializer.Serialize(user);
+                    await _queueClientService.SendMessageAsync(message);
+                    _logger.LogInformation("User was sent to the Azure Queue");
+
+                    return Ok(user);
+                }
+
+                _logger.LogWarning("The queue is empty");
+                return NoContent();
             }
-           
-            return Ok(user);
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return BadRequest($"{e.Message}");
+            }
         }
         
         

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Azure.Storage.Queues;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
@@ -20,6 +21,14 @@ namespace RandomUserSender.Extensions
                     BaseAddress = uri
                 }, 
                 serviceProvide.GetRequiredService<ILogger<IUserService>>()));
+        }
+
+        public static IServiceCollection AddQueueClientSingleton(this IServiceCollection services,
+            string connectionString,
+            string queueName)
+        {
+            return services.AddSingleton<IQueueClientService, QueueClientService>(x =>
+                new QueueClientService(new QueueClient(connectionString, queueName)));
         }
     }
 }

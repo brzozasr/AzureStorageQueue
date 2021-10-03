@@ -27,6 +27,9 @@ namespace RandomUserSender
             services.AddUserService(new Uri(Configuration["RandomUserMe:BaseApiUrl"]));
             services.AddSingleton<IUsersQueue, UsersQueue>();
             services.AddHostedService<UserBackgroundService>();
+            services.AddQueueClientSingleton(
+                Configuration["StorageQueue:ConnectionString"], 
+                Configuration["StorageQueue:QueueName"]);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RandomUserSender", Version = "v1" });
