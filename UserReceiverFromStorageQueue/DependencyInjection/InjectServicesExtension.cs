@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Azure.Storage.Queues;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using UserSenderToStorageQueue.Services;
-using UserSenderToStorageQueue.Utilities;
+using UserReceiverFromStorageQueue.Services;
+using UserReceiverFromStorageQueue.Utilities;
 
-namespace UserSenderToStorageQueue.DependencyInjection
+namespace UserReceiverFromStorageQueue.DependencyInjection
 {
     static class InjectServicesExtension
     {

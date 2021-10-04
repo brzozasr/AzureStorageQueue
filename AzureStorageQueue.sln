@@ -10,12 +10,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomUserSender", "RandomU
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedModels", "SharedModels\SharedModels.csproj", "{35A09485-C9EB-430A-9C72-1F936D5310D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserSenderToStorageQueue", "UserSenderToStorageQueue\UserSenderToStorageQueue.csproj", "{5E864585-A36D-4CB3-A22D-3050A9770521}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserSenderToStorageQueue", "UserSenderToStorageQueue\UserSenderToStorageQueue.csproj", "{5E864585-A36D-4CB3-A22D-3050A9770521}"
 	ProjectSection(ProjectDependencies) = postProject
 		{35A09485-C9EB-430A-9C72-1F936D5310D5} = {35A09485-C9EB-430A-9C72-1F936D5310D5}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserReceiverFromStorageQueue", "UserReceiverFromStorageQueue\UserReceiverFromStorageQueue.csproj", "{BF9D759E-F19D-4BCA-9EA1-07270209BD44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserReceiverFromStorageQueue", "UserReceiverFromStorageQueue\UserReceiverFromStorageQueue.csproj", "{BF9D759E-F19D-4BCA-9EA1-07270209BD44}"
+	ProjectSection(ProjectDependencies) = postProject
+		{35A09485-C9EB-430A-9C72-1F936D5310D5} = {35A09485-C9EB-430A-9C72-1F936D5310D5}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
