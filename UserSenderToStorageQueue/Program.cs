@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -22,7 +21,7 @@ namespace UserSenderToStorageQueue
                 .GetRequiredService<ILoggerFactory>()
                 .CreateLogger<Program>();
             
-            // Get the Queue Client
+            // Get the service user sender
             var sendUserService = serviceProvider
                 .GetRequiredService<ISendUserService>();
 
@@ -35,7 +34,7 @@ namespace UserSenderToStorageQueue
 
                 if (user == null)
                 {
-                    logger.LogInformation("The user was not sent due to it is equal null");
+                    logger.LogWarning("The user was not sent due to it is equal null");
                 }
 
                 await Task.Delay(TimeSpan.FromSeconds(30));
