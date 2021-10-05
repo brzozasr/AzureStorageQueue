@@ -34,10 +34,12 @@ namespace RandomUserSender
             services.AddQueueClientSingleton(
                 Configuration["StorageQueue:ConnectionString"], 
                 Configuration["StorageQueue:QueueName"]);
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RandomUserSender", Version = "v1" });
             });
+
             services.AddAzureClients(builder =>
             {
                 builder.AddBlobServiceClient(Configuration["StorageQueue:ConnectionString:blob"], preferMsi: true);

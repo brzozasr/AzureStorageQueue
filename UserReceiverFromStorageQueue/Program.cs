@@ -49,7 +49,7 @@ namespace UserReceiverFromStorageQueue
                     string formattedJson = jt.ToString();
                     Helper.CutString(ref formattedJson, 200, 200, "...");
 
-                    Console.WriteLine(formattedJson);
+                    logger.LogInformation(formattedJson);
 
                     await queueClient.DeleteMessageAsync(queueMessage.MessageId, queueMessage.PopReceipt);
                 }

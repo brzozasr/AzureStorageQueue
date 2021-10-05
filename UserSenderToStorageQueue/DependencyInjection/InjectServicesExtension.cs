@@ -2,6 +2,7 @@
 using System.Net.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Serilog;
 using UserSenderToStorageQueue.Services;
 using UserSenderToStorageQueue.Utilities;
 
@@ -11,7 +12,11 @@ namespace UserSenderToStorageQueue.DependencyInjection
     {
         public static IServiceProvider InjectServices(this IServiceCollection services)
         {
-            services.AddLogging(config => config.AddConsole());
+            services.AddLogging(config =>
+            {
+                config.AddSerilog(new LoggerConfiguration().WriteTo.File("logs.txt").CreateLogger())
+                    .AddConsole();
+            });
             services.AddSingleton<ISendUserService, SendUserService>(serviceProvider => 
                 new SendUserService(new HttpClient
                 {
