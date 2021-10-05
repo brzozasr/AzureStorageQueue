@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "apis1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ApiManagement/service/user-queue-api-managment/apis/userstoragequeue",
+      "type": "apis.azure",
+      "apiEndpoint": "https://user-queue-api-managment.azure-api.net/v1"
+    },
+    "storage1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Storage/storageAccounts/weatherstoragesb",
+      "type": "storage.azure",
+      "connectionId": "StorageQueue:ConnectionString",
+      "secretStore": "AzureAppSettings"
+    }
+  }
+}
